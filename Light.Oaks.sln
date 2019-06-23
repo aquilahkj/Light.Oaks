@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light.Oaks", "src\Light.Oaks\Light.Oaks.csproj", "{131C723A-B019-4524-A323-6B70288F6ECD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5C6E364A-9DD3-49EA-AB56-29F10E072568}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{8E0E330C-EF49-4E0A-AC92-E66954AB8987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light.Oaks.Demo", "demo\Light.Oaks.Demo\Light.Oaks.Demo.csproj", "{E1317D08-2821-4FA9-BC0B-E87083216098}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{131C723A-B019-4524-A323-6B70288F6ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{131C723A-B019-4524-A323-6B70288F6ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{131C723A-B019-4524-A323-6B70288F6ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{131C723A-B019-4524-A323-6B70288F6ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1317D08-2821-4FA9-BC0B-E87083216098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1317D08-2821-4FA9-BC0B-E87083216098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1317D08-2821-4FA9-BC0B-E87083216098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1317D08-2821-4FA9-BC0B-E87083216098}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{131C723A-B019-4524-A323-6B70288F6ECD} = {5C6E364A-9DD3-49EA-AB56-29F10E072568}
+		{E1317D08-2821-4FA9-BC0B-E87083216098} = {8E0E330C-EF49-4E0A-AC92-E66954AB8987}
+	EndGlobalSection
+EndGlobal
