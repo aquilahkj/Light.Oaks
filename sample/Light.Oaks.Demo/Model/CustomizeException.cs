@@ -11,4 +11,15 @@ namespace Light.Oaks.Demo
         {
         }
     }
+
+    public class SomeException : Exception
+    {
+        public SomeException()
+        {
+        }
+
+        public SomeException(string message) : base(message)
+        {
+        }
+    }
 }

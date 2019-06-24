@@ -26,7 +26,7 @@ namespace Light.Oaks
 
             bool logTraceId = (model.LogType & LogType.LogTraceId) == LogType.LogTraceId;
 
-            bool log = logMessage | logPostData | logFullException | logTraceId;
+            bool log = logMessage || logPostData || logFullException || logTraceId;
 
             if (logger != null && log) {
                 var user = httpContext.GetAccount();
@@ -36,7 +36,8 @@ namespace Light.Oaks
                 }
                 var token = httpContext.GetToken();
                 var sb = new StringBuilder();
-                sb.Append($"message:\"{FormatString(exception.Message)}\"");
+                sb.Append($"type:\"{exception.GetType().FullName}\"");
+                sb.Append($",message:\"{FormatString(exception.Message)}\"");
                 sb.Append($",action:\"{FormatString(action)}\"");
                 if (token != null)
                     sb.Append($",token:\"{FormatString(token)}\"");

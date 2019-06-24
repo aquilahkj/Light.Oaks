@@ -54,23 +54,27 @@ namespace Light.Oaks.Demo
             });
 
             services.AddAuthorize(builder => {
+                builder.TestMode = true;
                 builder.UseDesEncryptor("aabb");
             });
 
             services.AddException(builder => {
-                builder.EnableExceptionLogger();
-                builder. 
-                builder.RegisterType<AuthorizeException>(x => {
+                //builder.EnableLogger = true;
+                //builder.UseOkStatus = true;
+                builder.RegisterException<AuthorizeException>(x => {
                     return new ExceptionModel() {
                         Code = 40101,
-                        Message = "ex:" + x.Message,
+                        Message = x.Type.ToString() + ":" + x.Message,
                         HttpStatus = 401,
                         LogType = LogType.LogTraceId | LogType.LogPostData | LogType.LogFullException
                     };
                 });
-                builder.RegisterCode<PermissionException>(40301, 403);
-                builder.RegisterCode<SubPermissionException>(40302, 403, LogType.LogTraceId);
-                builder.RegisterCode<CustomizeException>(41000, 410, LogType.LogTraceId | LogType.LogFullException);
+                builder.RegisterException<Exception>(50001, "神秘错误", 500, LogType.LogAll);
+                builder.RegisterException<PermissionException>(40301, httpStatus: 403);
+                builder.RegisterException<SubPermissionException>(40302, httpStatus: 403, logType: LogType.LogTraceId);
+                builder.RegisterException<CustomizeException>(41000, "自定义错误", 500, LogType.LogTraceId | LogType.LogFullException);
+                builder.RegisterException<ParameterException>(40001, httpStatus: 400, logType: LogType.LogTraceId | LogType.LogPostData);
+                builder.RegisterException<SomeException>(40002, httpStatus: 400, logType: LogType.LogTraceId | LogType.LogPostData);
             });
         }
 

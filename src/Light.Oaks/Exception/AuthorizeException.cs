@@ -7,12 +7,16 @@ namespace Light.Oaks
     /// </summary>
     public class AuthorizeException : Exception
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public AuthorizeErrorType Type { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Light.Oaks.AuthorizeException"/> class.
         /// </summary>
-        /// <param name="message">Message.</param>
+        /// <param name="type"></param>
+        /// <param name="message"></param>
         public AuthorizeException(AuthorizeErrorType type, string message) : base(message)
         {
             Type = type;
@@ -21,7 +25,8 @@ namespace Light.Oaks
         /// <summary>
         /// Initializes a new instance of the <see cref="T:Light.Oaks.AuthorizeException"/> class.
         /// </summary>
-        /// <param name="message">Message.</param>
+        /// <param name="type"></param>
+        /// <param name="message"></param>
         /// <param name="innerException">Inner exception.</param>
         public AuthorizeException(AuthorizeErrorType type, string message, Exception innerException) : base(message, innerException)
         {
@@ -29,6 +34,9 @@ namespace Light.Oaks
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum AuthorizeErrorType
     {
         /// <summary>

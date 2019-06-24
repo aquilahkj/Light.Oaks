@@ -55,11 +55,18 @@ namespace Light.Oaks.Demo.Controllers
             return "ok";
         }
 
-        [HttpGet("error")]
+        [HttpGet("custom-error")]
         [AuthorizePermission]
-        public string Error()
+        public string CustomizeError()
         {
             throw new CustomizeException("some wrong");
+        }
+
+        [HttpGet("some-error")]
+        [AuthorizePermission]
+        public string SomeError()
+        {
+            throw new SomeException("some wrong");
         }
 
         [HttpGet("not-impl")]
@@ -73,7 +80,7 @@ namespace Light.Oaks.Demo.Controllers
         [AuthorizePermission]
         public string NoPermission()
         {
-            throw new SubPermissionException("sub permission");
+            throw new SubPermissionException("sub permissionn\nTest");
         }
     }
 }

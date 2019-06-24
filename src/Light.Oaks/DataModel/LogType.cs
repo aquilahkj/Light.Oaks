@@ -1,13 +1,16 @@
 ﻿using System;
 namespace Light.Oaks
 {
+    /// <summary>
+    /// Log Type
+    /// </summary>
     [Flags]
     public enum LogType
     {
         /// <summary>
         /// no log 
         /// </summary>
-        None = 0,
+        NoLog = 0,
         /// <summary>
         /// Only log the exception message
         /// </summary>
@@ -23,6 +26,10 @@ namespace Light.Oaks
         /// <summary>
         /// Create TraceId and log
         /// </summary>
-        LogTraceId = 8
+        LogTraceId = 8,
+        /// <summary>
+        /// Log all data
+        /// </summary>
+        LogAll = LogMessage | LogPostData | LogFullException | LogTraceId
     }
 }

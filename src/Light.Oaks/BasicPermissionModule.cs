@@ -1,13 +1,15 @@
 ﻿using System;
 namespace Light.Oaks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BasicPermissionModule : IPermissionModule
     {
-        public BasicPermissionModule()
-        {
-
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public RolePermission[] GetRolePermissions()
         {
             return new RolePermission[] {

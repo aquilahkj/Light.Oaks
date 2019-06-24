@@ -2,7 +2,10 @@
 
 namespace Light.Oaks
 {
-   public class VerifyInfo
+    /// <summary>
+    /// 
+    /// </summary>
+    public class VerifyInfo
     {
         /// <summary>
         /// Gets or sets the identifier.

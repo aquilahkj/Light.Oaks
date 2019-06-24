@@ -1,6 +1,9 @@
 ﻿using System;
 namespace Light.Oaks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class RolePermissionChangeNotifier
     {
         readonly IAuthorizeManagement authorizeManagement;
@@ -10,6 +13,9 @@ namespace Light.Oaks
             this.authorizeManagement = authorizeManagement;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void ResetRolePermission()
         {
             authorizeManagement.ResetRolePermission();

@@ -47,7 +47,7 @@ namespace Light.Oaks
                     var model = new ExceptionModel() {
                         Code = 40000,
                         Message = typeEx.Message,
-                        LogType = LogType.None,
+                        LogType = LogType.NoLog,
                         Errors = typeEx.Errors
                     };
                     return model;
@@ -97,9 +97,6 @@ namespace Light.Oaks
             }
             return baselist;
         }
-
-
-
 
         public ExceptionModel ProcessException(Exception exception)
         {

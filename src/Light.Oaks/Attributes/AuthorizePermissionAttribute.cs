@@ -9,10 +9,17 @@ namespace Light.Oaks
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class AuthorizePermissionAttribute : Attribute
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public AuthorizePermissionAttribute()
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="permission"></param>
         public AuthorizePermissionAttribute(string permission)
         {
             if (string.IsNullOrEmpty(permission)) {
@@ -32,6 +39,9 @@ namespace Light.Oaks
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string[] Permission { get; }
     }
 }

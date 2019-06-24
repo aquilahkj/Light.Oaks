@@ -4,17 +4,19 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Light.Oaks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ExceptionOptions
     {
-        //public Dictionary<Type, ExceptonTypeModel> ExceptionTypes { get; internal set; }
-        //public Dictionary<Type, ExceptonCodeModel> ExceptionCodes { get; internal set; }
-        //public bool EnableLogger { get; internal set; }
-        //public bool EnableShowDetail { get; internal set; }
-
-
+        /// <summary>
+        /// 
+        /// </summary>
         public List<ExceptonTypeModel> ExceptionTypes { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool UseOkStatus { get; set; }
-        //public List<ExceptonCodeModel> ExceptionCodes { get; set; }
     }
 }

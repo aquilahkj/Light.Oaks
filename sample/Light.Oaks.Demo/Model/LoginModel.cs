@@ -9,7 +9,7 @@ namespace Light.Oaks.Demo.Model
         /// 用户账号
         /// </summary>
         /// <value>The account.</value>
-        [Required(AllowEmptyStrings = false, ErrorMessage = "账号不能为空")]
+        [Required()]
         public string Account { get; set; }
         /// <summary>
         /// 密码

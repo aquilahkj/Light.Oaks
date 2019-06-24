@@ -8,26 +8,16 @@ namespace Light.Oaks
     /// <summary>
     /// Exception options builder.
     /// </summary>
-    public class  ExceptionOptionsBuilder
+    public class ExceptionOptionsBuilder
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Light.Oaks.ExceptionOptionsBuilder"/> class.
-        /// </summary>
-        public ExceptionOptionsBuilder()
-        {
-        }
-
-
         readonly List<ExceptonTypeModel> typeList = new List<ExceptonTypeModel>();
 
-        bool exceptionLogger;
-
         /// <summary>
-        /// Registers the type.
+        /// Registers the exception.
         /// </summary>
         /// <param name="func">Func.</param>
-        /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public void RegisterType<T>(Func<T, ExceptionModel> func) where T : Exception
+        /// <typeparam name="T"></typeparam>
+        public void RegisterException<T>(Func<T, ExceptionModel> func) where T : Exception
         {
             var nfunc = new Func<Exception, ExceptionModel>((arg) => {
                 return func.Invoke(arg as T);
@@ -37,16 +27,20 @@ namespace Light.Oaks
         }
 
         /// <summary>
-        /// Registers the code.
+        /// Registers the exception.
         /// </summary>
-        /// <param name="errCode">Error code.</param>
-        /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public void RegisterCode<T>(int errCode, int httpStatus = 0, LogType logType = LogType.LogMessage) where T : Exception
+        /// <typeparam name="T"></typeparam>
+        /// <param name="errCode">Error Code.</param>
+        /// <param name="errMsg">Error Message.</param>
+        /// <param name="httpStatus">Http Status Code.</param>
+        /// <param name="logType">LogType.</param>
+        public void RegisterException<T>(int errCode, string errMsg = null, int httpStatus = 0, LogType logType = LogType.LogMessage) where T : Exception
         {
-            Func<T, ExceptionModel> func = (ex) => {
+            ExceptionModel func(T ex)
+            {
                 var result = new ExceptionModel {
                     Code = errCode,
-                    Message = ex.Message,
+                    Message = errMsg ?? ex.Message,
                     LogType = logType,
                     HttpStatus = httpStatus
                 };
@@ -54,17 +48,19 @@ namespace Light.Oaks
                     result.Errors = multi.Errors;
                 }
                 return result;
-            };
-            RegisterType(func);
+            }
+            RegisterException((Func<T, ExceptionModel>)func);
         }
 
         /// <summary>
         /// Enables the exception logger.
         /// </summary>
-        public void EnableExceptionLogger()
-        {
-            exceptionLogger = true;
-        }
+        public bool EnableLogger { get; set; } = true;
+
+        /// <summary>
+        /// Use ok status code
+        /// </summary>
+        public bool UseOkStatus { get; set; }
 
         Action<IServiceCollection> processAction;
 
@@ -72,7 +68,10 @@ namespace Light.Oaks
 
         Action<IServiceCollection> resultAction;
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void SetExceptionModule<T>() where T : class, IExceptionProcessModule
         {
             void action(IServiceCollection service)
@@ -82,6 +81,11 @@ namespace Light.Oaks
             processAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
         public void SetExceptionModule<T>(T instance) where T : class, IExceptionProcessModule
         {
             void action(IServiceCollection service)
@@ -91,6 +95,10 @@ namespace Light.Oaks
             processAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
         public void SetExceptionModule(Func<IServiceProvider, IExceptionProcessModule> func)
         {
             void action(IServiceCollection service)
@@ -100,6 +108,10 @@ namespace Light.Oaks
             processAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void SetExceptionLogModule<T>() where T : class, IExceptionLogModule
         {
             void action(IServiceCollection service)
@@ -109,6 +121,11 @@ namespace Light.Oaks
             loggerAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
         public void SetExceptionLogModule<T>(T instance) where T : class, IExceptionLogModule
         {
             void action(IServiceCollection service)
@@ -118,6 +135,10 @@ namespace Light.Oaks
             loggerAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
         public void SetExceptionLogModule(Func<IServiceProvider, IExceptionLogModule> func)
         {
             void action(IServiceCollection service)
@@ -127,35 +148,50 @@ namespace Light.Oaks
             loggerAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void SetExceptionResultModule<T>() where T : class, IExceptionResultModule
         {
             void action(IServiceCollection service)
             {
                 service.AddSingleton<IExceptionResultModule, T>();
             }
-            loggerAction = action;
+            resultAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
         public void SetExceptionResultModule<T>(T instance) where T : class, IExceptionResultModule
         {
             void action(IServiceCollection service)
             {
                 service.AddSingleton<IExceptionResultModule>(instance);
             }
-            loggerAction = action;
+            resultAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
         public void SetExceptionResultModule(Func<IServiceProvider, IExceptionResultModule> func)
         {
             void action(IServiceCollection service)
             {
                 service.AddSingleton(func);
             }
-            loggerAction = action;
+            resultAction = action;
         }
 
-        public bool UseOkStatus { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
         internal void BuildServices(IServiceCollection services)
         {
             if (processAction != null) {
@@ -164,11 +200,12 @@ namespace Light.Oaks
             else {
                 services.AddSingleton<IExceptionProcessModule, BasicExceptionProcessModule>();
             }
-            if (loggerAction != null) {
-                loggerAction.Invoke(services);
-            }
-            else {
-                if (exceptionLogger) {
+            if (EnableLogger) {
+                if (loggerAction != null) {
+                    loggerAction.Invoke(services);
+                }
+                else {
+
                     services.AddSingleton<IExceptionLogModule, BasicExceptionLogModule>();
                 }
             }

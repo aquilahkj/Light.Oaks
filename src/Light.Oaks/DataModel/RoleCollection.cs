@@ -4,27 +4,49 @@ using System.Collections.Generic;
 
 namespace Light.Oaks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RoleCollection : IReadOnlyCollection<RoleModel>
     {
         readonly List<RoleModel> list = new List<RoleModel>();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roles"></param>
         public RoleCollection(ICollection<RoleModel> roles)
         {
             list.AddRange(roles);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public int Count => list.Count;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<RoleModel> GetEnumerator()
         {
             return list.GetEnumerator();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return list.GetEnumerator();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string[] GetRoles()
         {
             var hash = new HashSet<string>();
@@ -36,6 +58,10 @@ namespace Light.Oaks
             return array;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string[] GetPermissions()
         {
             var hash = new HashSet<string>();
@@ -49,7 +75,11 @@ namespace Light.Oaks
             return array;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="permission"></param>
+        /// <returns></returns>
         public bool CheckPermission(string permission)
         {
             foreach (var item in list) {

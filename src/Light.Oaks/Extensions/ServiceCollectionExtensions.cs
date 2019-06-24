@@ -46,6 +46,11 @@ namespace Microsoft.Extensions.DependencyInjection
             return services;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="redisConfig"></param>
         public static void UseRedisCache(this AuthorizeOptionsBuilder builder, string redisConfig)
         {
             ICacheAgent func(IServiceProvider provider)
@@ -54,7 +59,11 @@ namespace Microsoft.Extensions.DependencyInjection
             }
             builder.SetCache(func);
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
         public static void UseMemoryCache(this AuthorizeOptionsBuilder builder)
         {
             ICacheAgent func(IServiceProvider provider)
@@ -64,6 +73,11 @@ namespace Microsoft.Extensions.DependencyInjection
             builder.SetCache(func);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="encryptKey"></param>
         public static void UseDesEncryptor(this AuthorizeOptionsBuilder builder, string encryptKey)
         {
             IEncryptor func(IServiceProvider provider)

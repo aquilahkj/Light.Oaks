@@ -79,6 +79,11 @@ namespace Light.Oaks
             }
         }
 
+        /// <summary>
+        /// Gets the token.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         public static string GetToken(this HttpContext context)
         {
             if (context.Items.TryGetValue(TOKEN_INFO, out object value)) {

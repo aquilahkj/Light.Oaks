@@ -8,8 +8,14 @@ namespace Light.Oaks
     /// </summary>
     public class AuthorizeOptionsBuilder
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Expiry { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public bool TestMode { get; set; }
 
         Action<IServiceCollection> cacheAction;
@@ -20,6 +26,10 @@ namespace Light.Oaks
 
         Action<IServiceCollection> permissionAction;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void SetCache<T>() where T : class, ICacheAgent
         {
             void action(IServiceCollection service)
@@ -29,6 +39,11 @@ namespace Light.Oaks
             cacheAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
         public void SetCache<T>(T instance) where T : class, ICacheAgent
         {
             void action(IServiceCollection service)
@@ -38,6 +53,10 @@ namespace Light.Oaks
             cacheAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
         public void SetCache(Func<IServiceProvider, ICacheAgent> func)
         {
             void action(IServiceCollection service)
@@ -47,6 +66,10 @@ namespace Light.Oaks
             cacheAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void SetEncryptor<T>() where T : class, IEncryptor
         {
             void action(IServiceCollection service)
@@ -56,6 +79,11 @@ namespace Light.Oaks
             encryptorAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
         public void SetEncryptor<T>(T instance) where T : class, IEncryptor
         {
             void action(IServiceCollection service)
@@ -65,6 +93,10 @@ namespace Light.Oaks
             encryptorAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
         public void SetEncryptor(Func<IServiceProvider, IEncryptor> func)
         {
             void action(IServiceCollection service)
@@ -74,6 +106,10 @@ namespace Light.Oaks
             encryptorAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void SetAuthorizeModule<T>() where T : class, IAuthorizeModule
         {
             void action(IServiceCollection service)
@@ -83,6 +119,11 @@ namespace Light.Oaks
             authorizeAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
         public void SetAuthorizeModule<T>(T instance) where T : class, IAuthorizeModule
         {
             void action(IServiceCollection service)
@@ -92,6 +133,10 @@ namespace Light.Oaks
             authorizeAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
         public void SetAuthorizeModule(Func<IServiceProvider, IAuthorizeModule> func)
         {
             void action(IServiceCollection service)
@@ -101,6 +146,10 @@ namespace Light.Oaks
             authorizeAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void SetPermissionModule<T>() where T : class, IPermissionModule
         {
             void action(IServiceCollection service)
@@ -110,6 +159,11 @@ namespace Light.Oaks
             permissionAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
         public void SetPermissionModule<T>(T instance) where T : class, IPermissionModule
         {
             void action(IServiceCollection service)
@@ -119,6 +173,10 @@ namespace Light.Oaks
             permissionAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="func"></param>
         public void SetPermissionModule(Func<IServiceProvider, IPermissionModule> func)
         {
             void action(IServiceCollection service)
@@ -128,6 +186,10 @@ namespace Light.Oaks
             permissionAction = action;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="services"></param>
         internal void BuildServices(IServiceCollection services)
         {
             if (cacheAction != null) {

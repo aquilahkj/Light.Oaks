@@ -1,6 +1,9 @@
 ﻿using System;
 namespace Light.Oaks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class ExceptionModel
     {
         /// <summary>

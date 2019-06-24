@@ -3,15 +3,23 @@ using Newtonsoft.Json;
 
 namespace Light.Oaks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BasicAuthorizeModule : IAuthorizeModule
     {
         const string USER_PREFIX = "UA";
-
         readonly ICacheAgent cacheAgent;
         readonly IEncryptor encryptor;
         readonly bool testMode;
         readonly TimeSpan expiry;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="cacheAgent"></param>
+        /// <param name="encryptor"></param>
         public BasicAuthorizeModule(AuthorizeOptions options, ICacheAgent cacheAgent, IEncryptor encryptor)
         {
             this.encryptor = encryptor;
@@ -20,19 +28,36 @@ namespace Light.Oaks
             this.expiry = new TimeSpan(0, options.Expiry > 0 ? options.Expiry : 30, 0);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string ToeknName { get; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
         public void RemoveAuthorize(string id)
         {
             cacheAgent.RemoveCache($"{USER_PREFIX}_{id}");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool CheckAuthorize(string id)
         {
             var data = cacheAgent.GetCache($"{USER_PREFIX}_{id}");
             return !string.IsNullOrEmpty(data);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="verifyInfo"></param>
+        /// <returns></returns>
         public string CreateAuthorization(VerifyInfo verifyInfo)
         {
             if (verifyInfo == null) {
@@ -45,6 +70,11 @@ namespace Light.Oaks
             return token;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public VerifyInfo VerifyToken(string token)
         {
             if (string.IsNullOrEmpty(token)) {

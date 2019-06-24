@@ -5,9 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light.Oaks", "src\Light.Oak
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5C6E364A-9DD3-49EA-AB56-29F10E072568}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{8E0E330C-EF49-4E0A-AC92-E66954AB8987}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{8E0E330C-EF49-4E0A-AC92-E66954AB8987}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light.Oaks.Demo", "demo\Light.Oaks.Demo\Light.Oaks.Demo.csproj", "{E1317D08-2821-4FA9-BC0B-E87083216098}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Light.Oaks.Demo", "sample\Light.Oaks.Demo\Light.Oaks.Demo.csproj", "{E1317D08-2821-4FA9-BC0B-E87083216098}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

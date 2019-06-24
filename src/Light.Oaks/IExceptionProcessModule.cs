@@ -1,12 +1,16 @@
 ﻿using System;
 namespace Light.Oaks
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IExceptionProcessModule
     {
-        //bool UseOkStatus { get; }
-
-        //bool RespOkStatus { get; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
         ExceptionModel ProcessException(Exception ex);
     }
 }
