@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.DependencyInjection;
+using System.IO;
+using System.Text;
+using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Light.Oaks
 {
-    class ExceptionManagement : IExceptionManagement
+    class ExceptionFilter : IExceptionFilter
     {
         readonly IExceptionProcessModule exceptionProcessModule;
-
+        readonly IExceptionLogModule exceptionLogModule;
         readonly IExceptionResultModule exceptionResultModule;
 
-        readonly IExceptionLogModule exceptionLogModule;
-
-        public ExceptionManagement(IServiceProvider serviceProvider)
+        public ExceptionFilter(IServiceProvider serviceProvider)
         {
             exceptionProcessModule = serviceProvider.GetService<IExceptionProcessModule>();
             if (exceptionProcessModule == null) {
@@ -25,14 +26,23 @@ namespace Light.Oaks
                 }
                 exceptionProcessModule = new BasicExceptionProcessModule(options);
             }
-
             exceptionLogModule = serviceProvider.GetService<IExceptionLogModule>();
-
             exceptionResultModule = serviceProvider.GetService<IExceptionResultModule>();
         }
 
-        public ExceptionProcessResult ProcessException(HttpContext context, Exception ex)
+        //readonly IExceptionManagement exceptionManagement;
+
+        //public ExceptionFilter(IExceptionManagement exceptionManagement)
+        //{
+        //    this.exceptionManagement = exceptionManagement;
+        //}
+
+        public void OnException(ExceptionContext context)
         {
+            Exception ex = context.Exception;
+            if (ex is AggregateException) {
+                ex = ex.InnerException;
+            }
             var model = exceptionProcessModule.ProcessException(ex);
             var errorResult = new ErrorResult() {
                 Code = model.Code,
@@ -43,7 +53,7 @@ namespace Light.Oaks
                 errorResult.TraceId = Guid.NewGuid().ToString("D");
             }
             if (exceptionLogModule != null) {
-                exceptionLogModule.LogError(context, ex, model, errorResult);
+                exceptionLogModule.LogError(context.HttpContext, ex, model, errorResult);
             }
             object httpData;
             if (exceptionResultModule != null) {
@@ -52,10 +62,8 @@ namespace Light.Oaks
             else {
                 httpData = errorResult;
             }
-            return new ExceptionProcessResult() {
-                HttpStatus = model.HttpStatus,
-                HttpData = httpData
-            };
+            context.HttpContext.Response.StatusCode = model.HttpStatus;
+            context.Result = new JsonResult(httpData);
         }
     }
 }

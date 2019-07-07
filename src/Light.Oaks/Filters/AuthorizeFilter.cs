@@ -1,21 +1,53 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Light.Oaks
 {
     class AuthorizeFilter : IActionFilter
     {
-        private readonly IAuthorizeManagement authorizeManagement;
+        readonly IAuthorizeModule authorizeModule;
 
-        public AuthorizeFilter(IAuthorizeManagement authorizeManagement)
+        readonly PermissionManagement permissionManagement;
+
+        readonly IPermissionModule permissionModule;
+
+        public AuthorizeFilter(IServiceProvider serviceProvider)
         {
-            this.authorizeManagement = authorizeManagement;
+            authorizeModule = serviceProvider.GetRequiredService<IAuthorizeModule>();
+            permissionManagement = serviceProvider.GetRequiredService<PermissionManagement>();
+            permissionModule = serviceProvider.GetService<IPermissionModule>();
         }
+
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
 
+        }
+
+        private AuthorizeInfo VerifyAuthorize(string token)
+        {
+            if (permissionModule != null) {
+                if (!permissionManagement.HasLoad) {
+                    lock (permissionManagement) {
+                        if (!permissionManagement.HasLoad) {
+                            permissionManagement.SetRoles(permissionModule.GetRoles());
+                        }
+                    }
+                }
+            }
+
+            var verifyInfo = authorizeModule.VerifyToken(token);
+            var authorizeInfo = new AuthorizeInfo() {
+                Id = verifyInfo.Id,
+                Account = verifyInfo.Account,
+                CreateTime = verifyInfo.CreateTime,
+                Key = verifyInfo.Key,
+                Name = verifyInfo.Name,
+                Roles = permissionManagement.GetRoleCollection(verifyInfo.Roles)
+            };
+            return authorizeInfo;
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
@@ -25,7 +57,11 @@ namespace Light.Oaks
                 if (authorizeAttributes.Length > 0) {
                     var httpContext = context.HttpContext;
                     var request = context.HttpContext.Request;
-                    var tokens = request.Headers[authorizeManagement.TokenName];
+                    var tokenName = authorizeModule.ToeknName;
+                    if (string.IsNullOrEmpty(tokenName)) {
+                        tokenName = "X-Token";
+                    }
+                    var tokens = request.Headers[tokenName];
                     string token;
                     if (tokens.Count == 0) {
                         token = string.Empty;
@@ -35,7 +71,7 @@ namespace Light.Oaks
                     }
                     httpContext.SetToken(token);
                     var action = context.HttpContext.Request.Path;
-                    AuthorizeInfo authorize = authorizeManagement.VerifyAuthorize(token);
+                    AuthorizeInfo authorize = VerifyAuthorize(token);
                     httpContext.SetAuthorizeInfo(authorize);
                     var authorizeAttribute = (AuthorizePermissionAttribute)authorizeAttributes[0];
 

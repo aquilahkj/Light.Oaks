@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.DependencyInjection
             var builder = new ExceptionOptionsBuilder();
             options?.Invoke(builder);
             builder.BuildServices(services);
-            services.AddSingleton<IExceptionManagement, ExceptionManagement>();
+            //services.AddSingleton<IExceptionManagement, ExceptionManagement>();
             services.AddMvc(x => {
                 x.Filters.Add<ExceptionFilter>();
             });
@@ -38,8 +38,9 @@ namespace Microsoft.Extensions.DependencyInjection
             var builder = new AuthorizeOptionsBuilder();
             options?.Invoke(builder);
             builder.BuildServices(services);
-            services.AddSingleton<IAuthorizeManagement, AuthorizeManagement>();
-            services.AddSingleton<RolePermissionChangeNotifier>();
+            //services.AddSingleton<IAuthorizeManagement, AuthorizeManagement>();
+            services.AddTransient<RolePermissionChangeNotifier>();
+            services.AddSingleton<PermissionManagement>();
             services.AddMvc(x => {
                 x.Filters.Add<AuthorizeFilter>();
             });
@@ -51,15 +52,16 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="redisConfig"></param>
-        public static void UseRedisCache(this AuthorizeOptionsBuilder builder, string redisConfig)
+        /// <param name="serviceLifetime"></param>
+        public static void UseRedisCache(this AuthorizeOptionsBuilder builder, string redisConfig, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             ICacheAgent func(IServiceProvider provider)
             {
                 return new RedisCacheAgent(redisConfig);
             }
-            builder.SetCache(func);
+            builder.SetCache(func, serviceLifetime);
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
@@ -78,13 +80,14 @@ namespace Microsoft.Extensions.DependencyInjection
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="encryptKey"></param>
-        public static void UseDesEncryptor(this AuthorizeOptionsBuilder builder, string encryptKey)
+        /// <param name="serviceLifetime"></param>
+        public static void UseDesEncryptor(this AuthorizeOptionsBuilder builder, string encryptKey, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             IEncryptor func(IServiceProvider provider)
             {
                 return new DesEncryptor(encryptKey);
             }
-            builder.SetEncryptor(func);
+            builder.SetEncryptor(func, serviceLifetime);
         }
     }
 }

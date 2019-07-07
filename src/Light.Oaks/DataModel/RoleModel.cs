@@ -17,13 +17,12 @@ namespace Light.Oaks
         /// <param name="permissions"></param>
         public RoleModel(string role, ICollection<string> permissions)
         {
-            if (permissions == null) {
-                throw new ArgumentNullException(nameof(permissions));
-            }
             this.Role = role ?? throw new ArgumentNullException(nameof(role));
-            foreach (var item in permissions) {
-                hash.Add(item);
-                IsAdmin |= item == "admin";
+            if (permissions != null) {
+                foreach (var item in permissions) {
+                    hash.Add(item);
+                    IsAdmin |= item == "admin";
+                }
             }
         }
 

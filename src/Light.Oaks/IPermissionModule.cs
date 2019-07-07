@@ -6,10 +6,16 @@ namespace Light.Oaks
     /// </summary>
     public interface IPermissionModule
     {
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <returns></returns>
+        //RolePermission[] GetRolePermissions();
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        RolePermission[] GetRolePermissions();
+        Role[] GetRoles();
     }
 }

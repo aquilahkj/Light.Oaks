@@ -6,37 +6,59 @@ namespace Light.Oaks
     /// </summary>
     public class BasicPermissionModule : IPermissionModule
     {
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <returns></returns>
+        //public RolePermission[] GetRolePermissions()
+        //{
+        //    return new RolePermission[] {
+        //        new RolePermission() {
+        //            Role = "admin",
+        //            Permission  = "admin"
+        //        },
+        //        new RolePermission() {
+        //            Role = "user",
+        //            Permission  = "create"
+        //        },
+        //        new RolePermission() {
+        //            Role = "user",
+        //            Permission  = "update"
+        //        },
+        //        new RolePermission() {
+        //            Role = "user",
+        //            Permission  = "delete"
+        //        },
+        //        new RolePermission() {
+        //            Role = "user",
+        //            Permission  = "read"
+        //        },
+        //        new RolePermission() {
+        //            Role = "guest",
+        //            Permission  = "read"
+        //        },
+        //    };
+        //}
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public RolePermission[] GetRolePermissions()
+        public Role[] GetRoles()
         {
-            return new RolePermission[] {
-                new RolePermission() {
-                    Role = "admin",
-                    PermissionCode = "admin"
+            return new Role[] {
+                new Role() {
+                    Code = "admin",
+                   Permissions= new string[] { "admin" }
                 },
-                new RolePermission() {
-                    Role = "user",
-                    PermissionCode = "create"
+                new Role() {
+                    Code = "user",
+                    Permissions  = new string[] { "create", "update", "delete", "read" }
                 },
-                new RolePermission() {
-                    Role = "user",
-                    PermissionCode = "update"
-                },
-                new RolePermission() {
-                    Role = "user",
-                    PermissionCode = "delete"
-                },
-                new RolePermission() {
-                    Role = "user",
-                    PermissionCode = "read"
-                },
-                new RolePermission() {
-                    Role = "guest",
-                    PermissionCode = "read"
-                },
+                new Role() {
+                    Code = "guest",
+                    Permissions  = new string[] { "read" }
+                }
             };
         }
     }

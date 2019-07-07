@@ -72,11 +72,19 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void SetExceptionModule<T>() where T : class, IExceptionProcessModule
+        public void SetExceptionModule<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IExceptionProcessModule
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton<IExceptionProcessModule, T>();
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped<IExceptionProcessModule, T>();
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient<IExceptionProcessModule, T>();
+                }
+                else {
+                    service.AddSingleton<IExceptionProcessModule, T>();
+                }
             }
             processAction = action;
         }
@@ -99,11 +107,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <param name="func"></param>
-        public void SetExceptionModule(Func<IServiceProvider, IExceptionProcessModule> func)
+        /// <param name="serviceLifetime"></param>
+        public void SetExceptionModule(Func<IServiceProvider, IExceptionProcessModule> func, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton(func);
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped(func);
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient(func);
+                }
+                else {
+                    service.AddSingleton(func);
+                }
             }
             processAction = action;
         }
@@ -112,11 +129,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void SetExceptionLogModule<T>() where T : class, IExceptionLogModule
+        /// <param name="serviceLifetime"></param>
+        public void SetExceptionLogModule<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IExceptionLogModule
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton<IExceptionLogModule, T>();
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped<IExceptionLogModule, T>();
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient<IExceptionLogModule, T>();
+                }
+                else {
+                    service.AddSingleton<IExceptionLogModule, T>();
+                }
             }
             loggerAction = action;
         }
@@ -139,11 +165,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <param name="func"></param>
-        public void SetExceptionLogModule(Func<IServiceProvider, IExceptionLogModule> func)
+        /// <param name="serviceLifetime"></param>
+        public void SetExceptionLogModule(Func<IServiceProvider, IExceptionLogModule> func, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton(func);
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped(func);
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient(func);
+                }
+                else {
+                    service.AddSingleton(func);
+                }
             }
             loggerAction = action;
         }
@@ -152,11 +187,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void SetExceptionResultModule<T>() where T : class, IExceptionResultModule
+        /// <param name="serviceLifetime"></param>
+        public void SetExceptionResultModule<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IExceptionResultModule
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton<IExceptionResultModule, T>();
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped<IExceptionResultModule, T>();
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient<IExceptionResultModule, T>();
+                }
+                else {
+                    service.AddSingleton<IExceptionResultModule, T>();
+                }
             }
             resultAction = action;
         }
@@ -179,11 +223,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <param name="func"></param>
-        public void SetExceptionResultModule(Func<IServiceProvider, IExceptionResultModule> func)
+        /// <param name="serviceLifetime"></param>
+        public void SetExceptionResultModule(Func<IServiceProvider, IExceptionResultModule> func, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton(func);
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped(func);
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient(func);
+                }
+                else {
+                    service.AddSingleton(func);
+                }
             }
             resultAction = action;
         }
@@ -205,7 +258,6 @@ namespace Light.Oaks
                     loggerAction.Invoke(services);
                 }
                 else {
-
                     services.AddSingleton<IExceptionLogModule, BasicExceptionLogModule>();
                 }
             }

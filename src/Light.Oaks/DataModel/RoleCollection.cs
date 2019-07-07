@@ -17,7 +17,8 @@ namespace Light.Oaks
         /// <param name="roles"></param>
         public RoleCollection(ICollection<RoleModel> roles)
         {
-            list.AddRange(roles);
+            if (roles != null)
+                list.AddRange(roles);
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Light.Oaks
         {
             var hash = new HashSet<string>();
             foreach (var item in list) {
-                foreach(var permission in item) {
+                foreach (var permission in item) {
                     hash.Add(permission);
                 }
             }

@@ -85,7 +85,7 @@ namespace Light.Oaks
                         CreateTime = DateTime.Now,
                         Key = string.Empty,
                         Name = "test",
-                        Roles = new string[0]
+                        Roles = new string[] { "admin" }
                     };
                     return info;
                 }

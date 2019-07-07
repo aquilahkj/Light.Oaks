@@ -18,6 +18,11 @@ namespace Light.Oaks
         /// </summary>
         public bool TestMode { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool UsePermission { get; set; }
+
         Action<IServiceCollection> cacheAction;
 
         Action<IServiceCollection> encryptorAction;
@@ -30,11 +35,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void SetCache<T>() where T : class, ICacheAgent
+        /// <param name="serviceLifetime"></param>
+        public void SetCache<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, ICacheAgent
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton<ICacheAgent, T>();
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped<ICacheAgent, T>();
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient<ICacheAgent, T>();
+                }
+                else {
+                    service.AddSingleton<ICacheAgent, T>();
+                }
             }
             cacheAction = action;
         }
@@ -57,11 +71,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <param name="func"></param>
-        public void SetCache(Func<IServiceProvider, ICacheAgent> func)
+        /// <param name="serviceLifetime"></param>
+        public void SetCache(Func<IServiceProvider, ICacheAgent> func, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton(func);
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped(func);
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient(func);
+                }
+                else {
+                    service.AddSingleton(func);
+                }
             }
             cacheAction = action;
         }
@@ -70,11 +93,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void SetEncryptor<T>() where T : class, IEncryptor
+        /// <param name="serviceLifetime"></param>
+        public void SetEncryptor<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IEncryptor
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton<IEncryptor, T>();
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped<IEncryptor, T>();
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient<IEncryptor, T>();
+                }
+                else {
+                    service.AddSingleton<IEncryptor, T>();
+                }
             }
             encryptorAction = action;
         }
@@ -97,11 +129,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <param name="func"></param>
-        public void SetEncryptor(Func<IServiceProvider, IEncryptor> func)
+        /// <param name="serviceLifetime"></param>
+        public void SetEncryptor(Func<IServiceProvider, IEncryptor> func, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton(func);
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped(func);
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient(func);
+                }
+                else {
+                    service.AddSingleton(func);
+                }
             }
             encryptorAction = action;
         }
@@ -110,11 +151,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void SetAuthorizeModule<T>() where T : class, IAuthorizeModule
+        /// <param name="serviceLifetime"></param>
+        public void SetAuthorizeModule<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IAuthorizeModule
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton<IAuthorizeModule, T>();
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped<IAuthorizeModule, T>();
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient<IAuthorizeModule, T>();
+                }
+                else {
+                    service.AddSingleton<IAuthorizeModule, T>();
+                }
             }
             authorizeAction = action;
         }
@@ -137,11 +187,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <param name="func"></param>
-        public void SetAuthorizeModule(Func<IServiceProvider, IAuthorizeModule> func)
+        /// <param name="serviceLifetime"></param>
+        public void SetAuthorizeModule(Func<IServiceProvider, IAuthorizeModule> func, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton(func);
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped(func);
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient(func);
+                }
+                else {
+                    service.AddSingleton(func);
+                }
             }
             authorizeAction = action;
         }
@@ -150,11 +209,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        public void SetPermissionModule<T>() where T : class, IPermissionModule
+        /// <param name="serviceLifetime"></param>
+        public void SetPermissionModule<T>(ServiceLifetime serviceLifetime = ServiceLifetime.Singleton) where T : class, IPermissionModule
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton<IPermissionModule, T>();
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped<IPermissionModule, T>();
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient<IPermissionModule, T>();
+                }
+                else {
+                    service.AddSingleton<IPermissionModule, T>();
+                }
             }
             permissionAction = action;
         }
@@ -177,11 +245,20 @@ namespace Light.Oaks
         /// 
         /// </summary>
         /// <param name="func"></param>
-        public void SetPermissionModule(Func<IServiceProvider, IPermissionModule> func)
+        /// <param name="serviceLifetime"></param>
+        public void SetPermissionModule(Func<IServiceProvider, IPermissionModule> func, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             void action(IServiceCollection service)
             {
-                service.AddSingleton(func);
+                if (serviceLifetime == ServiceLifetime.Scoped) {
+                    service.AddScoped(func);
+                }
+                else if (serviceLifetime == ServiceLifetime.Transient) {
+                    service.AddTransient(func);
+                }
+                else {
+                    service.AddSingleton(func);
+                }
             }
             permissionAction = action;
         }
@@ -210,11 +287,13 @@ namespace Light.Oaks
             else {
                 services.AddSingleton<IAuthorizeModule, BasicAuthorizeModule>();
             }
-            if (permissionAction != null) {
-                permissionAction.Invoke(services);
-            }
-            else {
-                services.AddSingleton<IPermissionModule, BasicPermissionModule>();
+            if (UsePermission) {
+                if (permissionAction != null) {
+                    permissionAction.Invoke(services);
+                }
+                else {
+                    services.AddSingleton<IPermissionModule, BasicPermissionModule>();
+                }
             }
             var options = new AuthorizeOptions() {
                 Expiry = Expiry,
