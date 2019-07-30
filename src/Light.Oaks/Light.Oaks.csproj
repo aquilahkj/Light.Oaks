@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>0.1.0</Version>
+    <Version>0.2.1</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Description>The light weight web api framework base on AspNetCore</Description>
     <Title>Light.Oaks</Title>
@@ -11,8 +11,8 @@
     <PackageLicenseUrl>https://github.com/aquilahkj/Light.Oaks/blob/master/LICENSE</PackageLicenseUrl>
     <Owners>Aquila Huang</Owners>
     <PackageProjectUrl>https://github.com/aquilahkj/Light.Oaks</PackageProjectUrl>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
-    <FileVersion>0.1.0.0</FileVersion>
+    <AssemblyVersion>0.2.1.0</AssemblyVersion>
+    <FileVersion>0.2.1.0</FileVersion>
     <PackageReleaseNotes>AspNetCore</PackageReleaseNotes>
     <PackageTags>WebApi, C#, Authorize</PackageTags>
     <AssemblyOriginatorKeyFile>LightOaks.snk</AssemblyOriginatorKeyFile>

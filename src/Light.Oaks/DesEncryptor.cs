@@ -22,8 +22,10 @@ namespace Light.Oaks
             }
             des = new DESCryptoServiceProvider();
             byte[] buffer = Encoding.UTF8.GetBytes(key);
-            MD5 md5 = MD5.Create();
-            buffer = md5.ComputeHash(buffer);
+            using (MD5 md5 = MD5.Create())
+            {
+                buffer = md5.ComputeHash(buffer);
+            }
             byte[] keyBytes = new byte[8];
             Buffer.BlockCopy(buffer, 4, keyBytes, 0, 8);
             des.IV = Ivs;

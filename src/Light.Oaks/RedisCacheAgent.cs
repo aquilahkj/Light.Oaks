@@ -7,9 +7,11 @@ namespace Light.Oaks
     class RedisCacheAgent : ICacheAgent
     {
         readonly RedisCache _client;
+        readonly string prefix;
 
-        public RedisCacheAgent(string redisConfig)
+        public RedisCacheAgent(string prefix, string redisConfig)
         {
+            this.prefix = prefix;
             if (string.IsNullOrWhiteSpace(redisConfig)) {
                 redisConfig = "127.0.0.1:6379,abortConnect=false";
             }
@@ -20,17 +22,17 @@ namespace Light.Oaks
 
         public string GetCache(string key)
         {
-            return _client.GetString(key);
+            return _client.GetString(prefix + key);
         }
 
         public void RemoveCache(string key)
         {
-            _client.Remove(key);
+            _client.Remove(prefix + key);
         }
 
         public void SetCache(string key, string value, TimeSpan expiry)
         {
-            _client.SetString(key, value, new DistributedCacheEntryOptions() {
+            _client.SetString(prefix + key, value, new DistributedCacheEntryOptions() {
                 SlidingExpiration = expiry
             });
         }

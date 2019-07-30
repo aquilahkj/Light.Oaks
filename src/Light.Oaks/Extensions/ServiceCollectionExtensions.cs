@@ -53,11 +53,11 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="builder"></param>
         /// <param name="redisConfig"></param>
         /// <param name="serviceLifetime"></param>
-        public static void UseRedisCache(this AuthorizeOptionsBuilder builder, string redisConfig, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
+        public static void UseRedisCache(this AuthorizeOptionsBuilder builder, string redisConfig, string prefix = null, ServiceLifetime serviceLifetime = ServiceLifetime.Singleton)
         {
             ICacheAgent func(IServiceProvider provider)
             {
-                return new RedisCacheAgent(redisConfig);
+                return new RedisCacheAgent(prefix, redisConfig);
             }
             builder.SetCache(func, serviceLifetime);
         }
