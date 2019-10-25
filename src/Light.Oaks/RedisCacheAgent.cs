@@ -22,7 +22,10 @@ namespace Light.Oaks
 
         public string GetCache(string key)
         {
-            return _client.GetString(prefix + key);
+            var pkey = prefix + key;
+            var data = _client.GetString(prefix + key);
+            _client.Refresh(pkey);
+            return data;
         }
 
         public void RemoveCache(string key)
